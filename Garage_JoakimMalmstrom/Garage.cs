@@ -3,7 +3,7 @@ using System;
 
 namespace Garage_JoakimMalmstrom
 {
-    internal class Garage<T> where T : Vehicle, IEnumerable
+    public class Garage<T> where T : Vehicle, IEnumerable
     {
         // Interface IEnumerable
 

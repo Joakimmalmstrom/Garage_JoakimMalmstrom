@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garage_JoakimMalmstrom", "Garage_JoakimMalmstrom\Garage_JoakimMalmstrom.csproj", "{29BA9240-D584-4636-93DC-204CEF6492F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Garage_JoakimMalmstrom", "Garage_JoakimMalmstrom\Garage_JoakimMalmstrom.csproj", "{29BA9240-D584-4636-93DC-204CEF6492F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageUnitTests", "GarageUnitTests\GarageUnitTests.csproj", "{D0842662-97E9-4482-B8D0-17AD5DA860B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{29BA9240-D584-4636-93DC-204CEF6492F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29BA9240-D584-4636-93DC-204CEF6492F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29BA9240-D584-4636-93DC-204CEF6492F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0842662-97E9-4482-B8D0-17AD5DA860B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0842662-97E9-4482-B8D0-17AD5DA860B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0842662-97E9-4482-B8D0-17AD5DA860B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0842662-97E9-4482-B8D0-17AD5DA860B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

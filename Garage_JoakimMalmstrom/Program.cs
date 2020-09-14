@@ -9,10 +9,24 @@ namespace Garage_JoakimMalmstrom
         {
             bool startMenu = true;
             bool mainMenu = true;
-
+            Console.WriteLine("1 for car. 2 for bus");
+            string input = Console.ReadLine();
+            GarageHandler garageHandler = new GarageHandler(5);
+            switch (input)
+            {
+                case "1":
+                    garageHandler.AddVehicle(VehicleType.Car);
+                    break;
+                case "2":
+                    garageHandler.AddVehicle(VehicleType.Bus);
+                    break;
+                default:
+                    break;
+            }
             StartMenu(startMenu);
 
             MainMenu(mainMenu);
+
         }
 
         private static bool StartMenu(bool startMenu)

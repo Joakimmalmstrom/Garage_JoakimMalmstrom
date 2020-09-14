@@ -8,9 +8,6 @@
             Length = length;
         }
 
-        public override Vehicle AddVehicle(Vehicle vehicle)
-        {
-            return vehicle;
-        }
+
     }
 }

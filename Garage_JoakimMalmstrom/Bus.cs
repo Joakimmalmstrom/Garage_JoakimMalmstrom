@@ -8,9 +8,5 @@
             NumSeats = numSeats;
         }
 
-        public override Vehicle AddVehicle(Vehicle vehicle)
-        {
-            return vehicle;
-        }
     }
 }
