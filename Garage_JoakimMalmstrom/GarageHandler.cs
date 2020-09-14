@@ -1,9 +1,12 @@
-﻿namespace Garage_JoakimMalmstrom
+﻿using System.Collections;
+
+namespace Garage_JoakimMalmstrom
 {
-    internal class GarageHandler
+    internal class GarageHandler : Garage<Vehicle>, IEnumerable
     {
-        public GarageHandler()
+        public GarageHandler(int capacity)
         {
+
         }
     }
 }

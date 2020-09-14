@@ -1,15 +1,27 @@
 ﻿using System.Collections;
+using System;
 
 namespace Garage_JoakimMalmstrom
 {
-    internal class Garage<T> : IEnumerable
+    internal class Garage<T> where T : Vehicle, IEnumerable
     {
-        // Begränsas till fordon
         // Interface IEnumerable
 
+        private int capacity;
         private Vehicle[] vehicles;
 
-        public int Capacity { get; set; }
+        public int Capacity
+        {
+            get { return capacity; }
+            set
+            {
+                if (vehicles.Length == value)
+                {
+                    throw new Exception("The garage is full!");
+                }
+                capacity = value;
+            }
+        }
 
         public Garage(int capacity)
         {
