@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Garage_JoakimMalmstrom
 {
@@ -8,6 +9,23 @@ namespace Garage_JoakimMalmstrom
         {
             bool startMenu = true;
             bool mainMenu = true;
+            
+            string input = Console.ReadLine();
+            switch (input)
+            {
+                case "1":
+                    Vehicle bus = new Bus("123123", "red", 4, 4);
+                    bus.AddVehicle(bus);
+                    Console.WriteLine(bus);
+                    break;
+                case "2":
+                    Vehicle air = new Airplane("123123", "red", 4, true);
+                    air.AddVehicle(air);
+                    Console.WriteLine(air.Color);
+                    break;
+                default:
+                    break;
+            }
 
             StartMenu(startMenu);
 
