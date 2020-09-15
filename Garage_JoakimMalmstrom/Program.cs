@@ -117,35 +117,31 @@ namespace Garage_JoakimMalmstrom
 
         private static void AddVehicleToGarage(GarageHandler garageHandler)
         {
-            Console.WriteLine("1. Add a Car");
-            Console.WriteLine("2. Add a Bus");
-            Console.WriteLine("3. Add a Boat");
-            Console.WriteLine("4. Add a Airplane");
-            Console.WriteLine("5. Add a Motorcycle");
-            Console.WriteLine("--------------------");
+            UI.AddVehicleToGarageInfo();
+
             string input = Console.ReadLine();
 
             switch (input)
             {
                 case "1":
-                    garageHandler.GetVehicleType(VehicleType.Car);
                     Console.Clear();
+                    garageHandler.GetVehicleType(VehicleType.Car);
                     break;
                 case "2":
-                    garageHandler.GetVehicleType(VehicleType.Bus);
                     Console.Clear();
+                    garageHandler.GetVehicleType(VehicleType.Bus);
                     break;
                 case "3":
-                    garageHandler.GetVehicleType(VehicleType.Boat);
                     Console.Clear();
+                    garageHandler.GetVehicleType(VehicleType.Boat);
                     break;
                 case "4":
-                    garageHandler.GetVehicleType(VehicleType.Airplane);
                     Console.Clear();
+                    garageHandler.GetVehicleType(VehicleType.Airplane);
                     break;
                 case "5":
-                    garageHandler.GetVehicleType(VehicleType.Motorcycle);
                     Console.Clear();
+                    garageHandler.GetVehicleType(VehicleType.Motorcycle);
                     break;
                 default:
                     Console.WriteLine("Invalid Command");
