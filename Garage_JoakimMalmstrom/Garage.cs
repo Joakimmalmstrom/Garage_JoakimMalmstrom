@@ -1,36 +1,67 @@
-﻿using System.Collections;
-using System;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Garage_JoakimMalmstrom
 {
-    public class Garage<T> where T : Vehicle, IEnumerable
+    public class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-        // Interface IEnumerable
-
         private int capacity;
-        private Vehicle[] vehicles;
+        private T[] vehicles;
+        private int count;
+
+        public int Count
+        {
+            get { return count; }
+            set { count = value; }
+        }
 
         public int Capacity
         {
             get { return capacity; }
-            set
-            {
-                if (vehicles.Length == value)
-                {
-                    throw new Exception("The garage is full!");
-                }
-                capacity = value;
-            }
+            set { capacity = value; }
         }
 
         public Garage(int capacity)
         {
             Capacity = capacity;
+            vehicles = new T[capacity];
         }
 
-        public IEnumerator GetEnumerator()
+        public bool IsFull()
         {
-            throw new System.NotImplementedException();
+            if (Count >= Capacity)
+                return true;
+            else
+                return false;
+        }
+
+        public void Add(T item)
+        {
+            vehicles[count++] = item;
+        }
+
+        public void ParkedVehicles()
+        {
+            foreach (var v in vehicles)
+            {
+                Console.WriteLine(v);
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach (var v in vehicles)
+            {
+                yield return v;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

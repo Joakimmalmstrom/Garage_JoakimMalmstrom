@@ -7,69 +7,63 @@ namespace Garage_JoakimMalmstrom
     {
         static void Main(string[] args)
         {
-            bool startMenu = true;
-            bool mainMenu = true;
-            Console.WriteLine("1 for car. 2 for bus");
-            string input = Console.ReadLine();
-            GarageHandler garageHandler = new GarageHandler(5);
-            switch (input)
-            {
-                case "1":
-                    garageHandler.AddVehicle(VehicleType.Car);
-                    break;
-                case "2":
-                    garageHandler.AddVehicle(VehicleType.Bus);
-                    break;
-                default:
-                    break;
-            }
-            StartMenu(startMenu);
+            int capacity;
+            SetGarageCapacity(out capacity);
+            var garageHandler = new GarageHandler(capacity);
+            SetStartVehicles(garageHandler);
 
-            MainMenu(mainMenu);
-
+            MainMenu(garageHandler);
         }
-
-        private static bool StartMenu(bool startMenu)
+        private static void SetGarageCapacity(out int capacity)
         {
-            Console.WriteLine("Enter the park capacity of the garage");
-            string input = Console.ReadLine();
-
-            try
-            {
-                Console.WriteLine($"The park capacity is {input}");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return StartMenu(startMenu);
-            }
-
+            bool isInvalidNumber = true;
             do
             {
-                Console.WriteLine("Would you like to populate the garage from the start? (y/n)");
-                input = Console.ReadLine();
+                Console.Write("Enter the park capacity of the garage: ");
+                bool success = int.TryParse(Console.ReadLine(), out capacity);
+                switch (success)
+                {
+                    case true:
+                        Console.WriteLine($"The park capacity is {capacity}");
+                        isInvalidNumber = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid number!");
+                        break;
+                }
+            } while (isInvalidNumber);
+        }
+        private static void SetStartVehicles(GarageHandler garageHandler)
+        {
+            bool isMenuActive = true;
+            do
+            {
+                Console.WriteLine("Would you like to populate the garage from the start? (Y/N)");
+                string input = Console.ReadLine();
 
                 switch (input)
                 {
-                    case "y":
-                        // Populate garage
-                        startMenu = false;
+                    case "Y":
+                        // TO DO: Get random vehicles with random properties
+                        garageHandler.Add(new Boat("ABC", "Red", 2, 5.2));
+                        isMenuActive = false;
                         break;
-                    case "n":
+
+                    case "N":
                         // Empty garage
-                        startMenu = false;
+                        isMenuActive = false;
                         break;
                     default:
                         Console.WriteLine("Unknown command!");
                         break;
                 }
-                // Answer
-            } while (startMenu);
-            return startMenu;
+            } while (isMenuActive);
         }
 
-        private static void MainMenu(bool mainMenu)
+        private static void MainMenu(GarageHandler garageHandler)
         {
+            bool isMenuActive = true;
+            
             Console.Clear();
             do
             {
@@ -78,6 +72,7 @@ namespace Garage_JoakimMalmstrom
                 Console.WriteLine("3. Retrieve a list of parked vehicles");
                 Console.WriteLine("4. Look for a vehicle through licence plate");
                 Console.WriteLine("5. Look for a vehicle through properties");
+                Console.WriteLine("--------------------");
                 Console.WriteLine("6. Quit application");
                 Console.WriteLine("--------------------");
 
@@ -86,7 +81,11 @@ namespace Garage_JoakimMalmstrom
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("Add vehicle");
+                        // ADD VEHICLE METHOD
+                        if (garageHandler.IsFull())
+                            Console.WriteLine("Garage is full!");
+                        else
+                            AddVehicleToGarage(garageHandler);
                         break;
                     case "2":
                         Console.Clear();
@@ -113,7 +112,45 @@ namespace Garage_JoakimMalmstrom
                         break;
                 }
 
-            } while (mainMenu);
+            } while (isMenuActive);
+        }
+
+        private static void AddVehicleToGarage(GarageHandler garageHandler)
+        {
+            Console.WriteLine("1. Add a Car");
+            Console.WriteLine("2. Add a Bus");
+            Console.WriteLine("3. Add a Boat");
+            Console.WriteLine("4. Add a Airplane");
+            Console.WriteLine("5. Add a Motorcycle");
+            Console.WriteLine("--------------------");
+            string input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    garageHandler.GetVehicleType(VehicleType.Car);
+                    Console.Clear();
+                    break;
+                case "2":
+                    garageHandler.GetVehicleType(VehicleType.Bus);
+                    Console.Clear();
+                    break;
+                case "3":
+                    garageHandler.GetVehicleType(VehicleType.Boat);
+                    Console.Clear();
+                    break;
+                case "4":
+                    garageHandler.GetVehicleType(VehicleType.Airplane);
+                    Console.Clear();
+                    break;
+                case "5":
+                    garageHandler.GetVehicleType(VehicleType.Motorcycle);
+                    Console.Clear();
+                    break;
+                default:
+                    Console.WriteLine("Invalid Command");
+                    break;
+            }
         }
     }
 }

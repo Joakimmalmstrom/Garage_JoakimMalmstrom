@@ -1,6 +1,8 @@
 using Garage_JoakimMalmstrom;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 namespace GarageUnitTests
 {
@@ -8,9 +10,12 @@ namespace GarageUnitTests
     public class GarageTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void AddVehicle_IncreaseCount()
         {
-            var garagetest = new Garage<Vehicle>(2);
+            var garage = new Garage<Car>(2);
+            
+            garage.AddVehicle(new Car("123", "red", 4, "dsa"));
+            garage.AddVehicle(new Car("123", "red", 4, "dsa"));
         }
     }
 }

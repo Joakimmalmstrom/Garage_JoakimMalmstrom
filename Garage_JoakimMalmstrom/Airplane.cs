@@ -2,10 +2,10 @@
 {
     internal class Airplane : Vehicle
     {
-        public bool IsPrivateJet { get; set; }
-        public Airplane(string regNumber, string color, int numWheels, bool isPrivateJet) : base(regNumber, color, numWheels)
+        public int NumEngines { get; set; }
+        public Airplane(string regNumber, string color, int numWheels, int numEngines) : base(regNumber, color, numWheels)
         {
-            IsPrivateJet = isPrivateJet;
+            NumEngines = numEngines;
         }
 
     }
