@@ -10,12 +10,29 @@ namespace GarageUnitTests
     public class GarageTests
     {
         [TestMethod]
-        public void AddVehicle_IncreaseCount()
+        public void Add_IncreaseCount()
         {
-            var garage = new Garage<Car>(2);
-            
-            garage.AddVehicle(new Car("123", "red", 4, "dsa"));
-            garage.AddVehicle(new Car("123", "red", 4, "dsa"));
+            var garage = new Garage<Vehicle>(2);
+
+            garage.Add(new Car("123", "red", 4, "dsa"));
+            var expectedCount = 1;
+            var actualCount = garage.Count;
+
+            Assert.AreEqual(expectedCount, actualCount);
+        }
+
+        [TestMethod]
+        public void IsFull_ReturnTrue()
+        {
+            var garage = new Garage<Vehicle>(0);
+            bool isFull;
+
+            if (garage.Count >= garage.Capacity)
+                isFull = true;
+            else
+                isFull = false;
+
+            Assert.IsTrue(isFull);
         }
     }
 }

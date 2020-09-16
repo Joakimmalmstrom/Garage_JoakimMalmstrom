@@ -40,7 +40,16 @@ namespace Garage_JoakimMalmstrom
 
         public void Add(T item)
         {
+            if (vehicles.Length <= 0)
+                vehicles = new T[capacity];
+
             vehicles[count++] = item;
+        }
+
+        public void Remove(T removeVehicle)
+        {
+            vehicles = vehicles.Where(v => v != removeVehicle).ToArray();
+            count--;
         }
 
         public void ParkedVehicles()
