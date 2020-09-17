@@ -8,17 +8,15 @@ namespace Garage_JoakimMalmstrom
 {
     internal class GarageHandler : Garage<Vehicle>
     {
-        private Dictionary<string, Vehicle> regNumRegister = new Dictionary<string, Vehicle>();
         public GarageHandler(int capacity) : base(capacity)
         {
 
         }
         public void GetRandomVehicles()
         {
-            string rRegNum = "ABC123";
-            var boat = new Boat(rRegNum, "Red", 2, 35);
-            regNumRegister.Add(rRegNum, boat);
-            Add(boat);
+            string regNumber = "ABC123";
+            var boat = new Boat(regNumber, "Red", 2, 35);
+            Add(regNumber, boat);
         }
 
         public void GetParkedVehicles()
@@ -34,13 +32,7 @@ namespace Garage_JoakimMalmstrom
 
             string input = Console.ReadLine().ToUpper();
 
-            foreach (var item in regNumRegister)
-            {
-                if (item.Key == input)
-                    Console.WriteLine($"Match Found: {item.Value}");
-                else
-                    Console.WriteLine($"Match not Found!"); 
-            }
+            Console.WriteLine(SearchNumber(input));
         }
 
         public bool IsGarageEmpty => Count <= 0;
@@ -53,26 +45,17 @@ namespace Garage_JoakimMalmstrom
 
             string input = Console.ReadLine().ToUpper();
 
-            foreach (var item in regNumRegister)
-            {
-                if (item.Key == input)
-                {
-                    regNumRegister.Remove(input);
-                    var tempVehicle = item.Value;
-                    Remove(tempVehicle);
-                    UI.VehicleWasRemoved(tempVehicle);
-                    return;
-                }
-            }
-            Console.WriteLine("There's no vehicle with that registration number");
+            if (!Remove(input))
+                UI.VehicleFailedRemoved(input);
         }
-        public void GetVehicleType(VehicleType vehicleType)
+
+        public void AddVehicle(VehicleType vehicleType)
         {
             try
             {
                 string regNumber, color;
                 int numWheels;
-                bool isCorrectFormat;
+                bool success;
 
                 AddVehicleQuestions(out regNumber, out color, out numWheels);
 
@@ -83,21 +66,19 @@ namespace Garage_JoakimMalmstrom
                         string model = Console.ReadLine();
 
                         var car = new Car(regNumber, color, numWheels, model);
-                        regNumRegister.Add(regNumber, car);
-                        Add(car);
+                        Add(regNumber, car);
                         UI.VehicleWasAdded(car);
                         break;
 
                     case VehicleType.Bus:
                         Console.Write("Enter Number of Seats: ");
                         int numSeats;
-                        isCorrectFormat = int.TryParse(Console.ReadLine(), out numSeats);
+                        success = int.TryParse(Console.ReadLine(), out numSeats);
 
-                        if (isCorrectFormat)
+                        if (success)
                         {
                             var bus = new Bus(regNumber, color, numWheels, numSeats);
-                            regNumRegister.Add(regNumber, bus);
-                            Add(bus);
+                            Add(regNumber, bus);
                             UI.VehicleWasAdded(bus);
                         }
                         else
@@ -107,13 +88,12 @@ namespace Garage_JoakimMalmstrom
                     case VehicleType.Boat:
                         Console.Write("Enter Length: ");
                         double length;
-                        isCorrectFormat = double.TryParse(Console.ReadLine(), out length);
+                        success = double.TryParse(Console.ReadLine(), out length);
 
-                        if (isCorrectFormat)
+                        if (success)
                         {
                             var boat = new Boat(regNumber, color, numWheels, length);
-                            regNumRegister.Add(regNumber, boat);
-                            Add(boat);
+                            Add(regNumber, boat);
                             UI.VehicleWasAdded(boat);
                         }
                         else
@@ -123,13 +103,13 @@ namespace Garage_JoakimMalmstrom
                     case VehicleType.Airplane:
                         Console.Write("Enter Number of Engines: ");
                         int numEngines;
-                        isCorrectFormat = int.TryParse(Console.ReadLine(), out numEngines);
+                        success = int.TryParse(Console.ReadLine(), out numEngines);
 
-                        if (isCorrectFormat)
+                        if (success)
                         {
                             var airplane = new Airplane(regNumber, color, numWheels, numEngines);
-                            regNumRegister.Add(regNumber, airplane);
-                            Add(airplane);
+                            Add(regNumber, airplane);
+                            UI.VehicleWasAdded(airplane);
                         }
                         else
                             throw new Exception("Invalid input!");
@@ -140,8 +120,7 @@ namespace Garage_JoakimMalmstrom
                         string type = Console.ReadLine();
 
                         var motorcycle = new Motorcycle(regNumber, color, numWheels, type);
-                        regNumRegister.Add(regNumber, motorcycle);
-                        Add(motorcycle);
+                        Add(regNumber, motorcycle);
                         UI.VehicleWasAdded(motorcycle);
                         break;
                 }
@@ -153,70 +132,24 @@ namespace Garage_JoakimMalmstrom
             }
         }
 
-        internal void SearchVehicleProperties()
+        public void SearchSpecificVehicle(VehicleType vehicleType)
         {
-            Console.WriteLine("Search for Vehicle Properties");
-            Console.WriteLine("--------------------");
-
-            Console.WriteLine("1. Look through all vehicles");
-            Console.WriteLine("2. Look through specific vehicles");
             string input = Console.ReadLine();
-
-            switch (input)
+            switch (vehicleType)
             {
-                case "1":
-                    SearchAllVehicles();
-                    break;
-                case "2":
-                    SearchSpecificVehicle();
-                    break;
+                case VehicleType.Car:
+                    // all cars
+                    // cars with color
+                    // cars with wheels
+                    // cars with 
                 default:
-                    Console.WriteLine("Unknown Input!");
                     break;
             }
         }
 
-        private void SearchSpecificVehicle()
+        public void SearchAllVehicles()
         {
-            throw new NotImplementedException();
-        }
-
-        private void SearchAllVehicles()
-        {
-            bool isCompiled = true;
-            do
-            {
-                Console.WriteLine("1. Look for Colors");
-                Console.WriteLine("2. Look for Amount of Wheels");
-                string input = Console.ReadLine();
-
-                switch (input)
-                {
-                    
-                    case "1":
-                        foreach (var item in regNumRegister)
-                        {
-                            if (item.Value.Color == input)
-                            {
-                                // tempVariable or vehicles[] array = item.Value;
-                            }
-                        }
-                        break;
-
-                    case "2":
-                        foreach (var item in regNumRegister)
-                        {
-                            //if (item.Value.NumWheels == int.TryParse(input, out input))
-                            //{
-
-                            //}
-                        }
-                        break;
-                    default:
-                        Console.WriteLine("Unknown Input!");
-                        break;
-                }
-            } while (isCompiled);
+            PropertySearch();
         }
 
         private static void AddVehicleQuestions(out string regNumber, out string color, out int numWheels)

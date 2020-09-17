@@ -6,11 +6,11 @@ namespace Garage_JoakimMalmstrom
     {
         public static void AddVehicleToGarageInfo()
         {
-            Console.WriteLine("1. Add a Car");
-            Console.WriteLine("2. Add a Bus");
-            Console.WriteLine("3. Add a Boat");
-            Console.WriteLine("4. Add a Airplane");
-            Console.WriteLine("5. Add a Motorcycle");
+            Console.WriteLine("1. Car");
+            Console.WriteLine("2. Bus");
+            Console.WriteLine("3. Boat");
+            Console.WriteLine("4. Airplane");
+            Console.WriteLine("5. Motorcycle");
             Console.WriteLine("--------------------");
         }
 
@@ -65,11 +65,38 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine("--------------------");
         }
 
+        internal static void PropertySearchInfo(string color, int wheels)
+        {
+            Console.WriteLine("1. Input for Color");
+            Console.WriteLine("2. Input for Number of Wheels");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("3. Output Color & Number of Wheels");
+            Console.WriteLine("4. Output Color");
+            Console.WriteLine("5. Output Number of Wheels");
+            Console.WriteLine("--------------------");
+            if (color != "" || wheels <= 0)
+            Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels}");
+        }
+
         public static void VehicleWasRemoved(Vehicle vehicle)
         {
             Console.WriteLine("--------------------");
             Console.WriteLine($"{vehicle} \nSuccessfully Removed!");
             Console.WriteLine("--------------------");
+        }
+
+        public static void VehicleFailedRemoved(string input)
+        {
+            Console.WriteLine($"No match for registration number: {input}");
+        }
+
+        internal static void SearchVehiclePropertiesInfo()
+        {
+            Console.WriteLine("Search for Vehicle Properties");
+            Console.WriteLine("--------------------");
+
+            Console.WriteLine("1. Look through all vehicles");
+            Console.WriteLine("2. Look through specific vehicles");
         }
     }
 }

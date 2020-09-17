@@ -64,6 +64,7 @@ namespace Garage_JoakimMalmstrom
             bool isMenuActive = true;
 
             Console.Clear();
+            garageHandler.CarCheck();
             do
             {
                 UI.MainMenuInfo(garageHandler);
@@ -76,7 +77,7 @@ namespace Garage_JoakimMalmstrom
                         if (garageHandler.IsGarageFull)
                             Console.WriteLine("Garage is full!");
                         else
-                            AddVehicleToGarage(garageHandler);
+                            garageHandler.AddVehicle(GetVehicleType());
                         UI.EnterToClear();
                         break;
 
@@ -109,7 +110,24 @@ namespace Garage_JoakimMalmstrom
                         if (garageHandler.IsGarageEmpty)
                             Console.WriteLine("Garage is empty!");
                         else
-                            garageHandler.SearchVehicleProperties();
+                            UI.SearchVehiclePropertiesInfo();
+
+                        switch (Console.ReadLine())
+                        {
+                            case "1":
+                                Console.Clear();
+                                garageHandler.SearchAllVehicles();
+                                break;
+
+                            case "2":
+                                Console.Clear();
+                                garageHandler.SearchSpecificVehicle(GetVehicleType());
+                                break;
+
+                            default:
+                                Console.WriteLine("Unknown input");
+                                break;
+                        }
                         UI.EnterToClear();
                         break;
 
@@ -125,10 +143,7 @@ namespace Garage_JoakimMalmstrom
 
             } while (isMenuActive);
         }
-
-        // TO DO: Move this to GarageHandler
-        // TO DO: Swap name to GetVehicleType
-        private static void AddVehicleToGarage(GarageHandler garageHandler)
+        public static VehicleType GetVehicleType()
         {
             UI.AddVehicleToGarageInfo();
 
@@ -138,27 +153,22 @@ namespace Garage_JoakimMalmstrom
             {
                 case "1":
                     Console.Clear();
-                    garageHandler.GetVehicleType(VehicleType.Car);
-                    break;
+                    return VehicleType.Car;
                 case "2":
                     Console.Clear();
-                    garageHandler.GetVehicleType(VehicleType.Bus);
-                    break;
+                    return VehicleType.Bus;
                 case "3":
                     Console.Clear();
-                    garageHandler.GetVehicleType(VehicleType.Boat);
-                    break;
+                    return VehicleType.Boat;
                 case "4":
                     Console.Clear();
-                    garageHandler.GetVehicleType(VehicleType.Airplane);
-                    break;
+                    return VehicleType.Airplane;
                 case "5":
                     Console.Clear();
-                    garageHandler.GetVehicleType(VehicleType.Motorcycle);
-                    break;
+                    return VehicleType.Motorcycle;
                 default:
                     Console.WriteLine("Invalid Command");
-                    break;
+                    return GetVehicleType();
             }
         }
     }
