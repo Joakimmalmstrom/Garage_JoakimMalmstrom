@@ -2,7 +2,7 @@
 
 namespace Garage_JoakimMalmstrom
 {
-    internal class Bus : Vehicle
+    internal class Bus : Vehicle, IBus
     {
         public int NumSeats { get; set; }
         public Bus(string regNum, string color, int numWheels, int numSeats) : base(regNum, color, numWheels)

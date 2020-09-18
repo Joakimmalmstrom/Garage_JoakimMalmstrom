@@ -2,18 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 
 namespace Garage_JoakimMalmstrom
 {
-    public class Garage<T> : IEnumerable<T> where T : Vehicle
+    public class Garage<T> : IEnumerable<T> where T : IVehicle
     {
         private int capacity;
         private T[] vehicles;
         private int count;
 
-        private Dictionary<string, Vehicle> regNumRegister = new Dictionary<string, Vehicle>();
+        private Dictionary<string, T> regNumRegister = new Dictionary<string, T>();
 
         public int Count
         {
@@ -44,15 +48,15 @@ namespace Garage_JoakimMalmstrom
 
         public bool Remove(string input)
         {
-            foreach (var item in regNumRegister)
+            foreach (var v in vehicles)
             {
-                if (item.Key == input)
+                if (v != null && v.RegNum == input)
                 {
-                    var vehicle = item.Value;
-                    vehicles = vehicles.Where(v => v != vehicle).ToArray();
-                    count--;
                     regNumRegister.Remove(input);
-                    UI.VehicleWasRemoved(vehicle);
+                    vehicles = vehicles.Where(t => t != null && t.RegNum != v.RegNum).ToArray();
+                    count--;
+
+                    UI.VehicleWasRemoved(v);
                     return true;
                 }
             }
@@ -77,81 +81,84 @@ namespace Garage_JoakimMalmstrom
             return $"Match NOT Found for: {input}";
         }
 
-        public void PropertySearch()
-        {
-            string color = "";
-            int wheels = 0;
-            bool isSearching = true;
+        // REWRITE WITH INTERFACE
+        //public void PropertySearch()
+        //{
+        //    string color = "";
+        //    int wheels = 0;
+        //    bool isSearching = true;
 
-            do
-            {
-                UI.PropertySearchInfo(color, wheels);
+        //    do
+        //    {
+        //        UI.PropertySearchInfo(color, wheels);
 
-                string input = Console.ReadLine();
+        //        string input = Console.ReadLine();
 
-                switch (input)
-                {
-                    case "1":
-                        Console.Clear();
-                        Console.Write("Input a Color: ");
-                        color = Console.ReadLine();
-                        Console.WriteLine($"{color} color added to the search filter");
-                        UI.EnterToClear();
-                        break;
+        //        switch (input)
+        //        {
+        //            case "1":
+        //                Console.Clear();
+        //                Console.Write("Input a Color: ");
+        //                color = Console.ReadLine();
+        //                Console.WriteLine($"{color} color added to the search filter");
+        //                UI.EnterToClear();
+        //                break;
 
-                    case "2":
-                        Console.Clear();
-                        Console.Write("Input Number of Wheels: ");
-                        string numInput = Console.ReadLine();
-                        bool success = int.TryParse(numInput, out wheels);
-                        if (success)
-                        {
-                            Console.WriteLine($"{wheels} number of wheels added to the search filter");
-                            UI.EnterToClear();
-                            break;
-                        }
-                        else
-                            Console.WriteLine("Wrong format!");
-                        UI.EnterToClear();
-                        break;
+        //            case "2":
+        //                Console.Clear();
+        //                Console.Write("Input Number of Wheels: ");
+        //                string numInput = Console.ReadLine();
+        //                bool success = int.TryParse(numInput, out wheels);
+        //                if (success)
+        //                {
+        //                    Console.WriteLine($"{wheels} number of wheels added to the search filter");
+        //                    UI.EnterToClear();
+        //                    break;
+        //                }
+        //                else
+        //                    Console.WriteLine("Wrong format!");
+        //                UI.EnterToClear();
+        //                break;
 
-                    case "3":
-                        var tempVehicles = from vehicle in vehicles
-                                           where vehicle != null && vehicle.Color == color && vehicle.NumWheels == wheels
-                                           select vehicle;
+        //            case "3":
+        //                var tempVehicles = from vehicle in vehicles
+        //                                   where vehicle != null && vehicle.Color == color && vehicle.NumWheels == wheels
+        //                                   select vehicle;
 
-                        OutputVehicles(tempVehicles);
-                        isSearching = false;
-                        break;
+        //                OutputVehicles(tempVehicles);
+        //                isSearching = false;
+        //                break;
 
-                    case "4":
-                        var colorVehicles = from vehicle in vehicles
-                                            where vehicle != null && vehicle.Color == color
-                                            select vehicle;
-                        OutputVehicles(colorVehicles);
-                        isSearching = false;
-                        break;
+        //            case "4":
+        //                var colorVehicles = from vehicle in vehicles
+        //                                    where vehicle != null && vehicle.Color == color
+        //                                    select vehicle;
+        //                OutputVehicles(colorVehicles);
+        //                isSearching = false;
+        //                break;
 
-                    case "5":
-                        var wheelVehicles = from vehicle in vehicles
-                                            where vehicle != null && vehicle.NumWheels == wheels
-                                            select vehicle;
+        //            case "5":
+        //                var wheelVehicles = from vehicle in vehicles
+        //                                    where vehicle != null && vehicle.NumWheels == wheels
+        //                                    select vehicle;
 
-                        OutputVehicles(wheelVehicles);
-                        isSearching = false;
-                        break;
-                    default:
-                        Console.WriteLine("Unknown input!");
-                        break;
-                }
-            } while (isSearching);
-        }
+        //                OutputVehicles(wheelVehicles);
+        //                isSearching = false;
+        //                break;
+        //            default:
+        //                Console.WriteLine("Unknown input!");
+        //                break;
+        //        }
+        //    } while (isSearching);
+        //}
 
         public void SpecificVehicleSearch(VehicleType vehicleType)
         {
             switch (vehicleType)
             {
                 case VehicleType.Car:
+                    Console.WriteLine("inside cars");
+                    Console.ReadLine();
                     // 1. Search Color (T)
                     // 2. Search NumWheels (T)
                     // 3. Search Model ()
@@ -172,31 +179,31 @@ namespace Garage_JoakimMalmstrom
             }
         }
 
-        private IEnumerable<T> CheckAllSpecificVehicles(string className)
-        {
-            var v = from vehicle in vehicles
-                       where vehicle != null && vehicle.GetType().Name == className
-                       select vehicle;
-            return v;
-        }
+        //private IEnumerable<T> CheckAllSpecificVehicles(string className)
+        //{
+        //    var v = from vehicle in vehicles
+        //            where vehicle != null && vehicle.GetType().Name == className
+        //            select vehicle;
+        //    return v;
+        //}
 
-        private static void OutputVehicles(IEnumerable<T> tempVehicle)
+        public void OutputVehicles(T tempVehicle)
         {
-            Console.Clear();
-            Console.WriteLine("Result");
-            Console.WriteLine("--------------------");
-            foreach (var v in tempVehicle)
-            {
-                Console.WriteLine(v);
-            }
-            Console.WriteLine("--------------------");
-            Console.WriteLine("Search Complete!");
+            //Console.Clear();
+            //Console.WriteLine("Result");
+            //Console.WriteLine("--------------------");
+            //foreach (T v in tempVehicle)
+            //{
+            //    Console.WriteLine(v);
+            //}
+            //Console.WriteLine("--------------------");
+            //Console.WriteLine("Search Complete!");
         }
 
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (var v in vehicles)
+            foreach (T v in vehicles)
             {
                 yield return v;
             }

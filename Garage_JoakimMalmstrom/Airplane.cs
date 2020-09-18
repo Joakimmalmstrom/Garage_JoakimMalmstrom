@@ -2,7 +2,7 @@
 
 namespace Garage_JoakimMalmstrom
 {
-    internal class Airplane : Vehicle
+    internal class Airplane : Vehicle, IAirplane
     {
         public int NumEngines { get; set; }
         public Airplane(string regNum, string color, int numWheels, int numEngines) : base(regNum, color, numWheels)

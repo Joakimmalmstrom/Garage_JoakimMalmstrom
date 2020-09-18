@@ -78,7 +78,7 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels}");
         }
 
-        public static void VehicleWasRemoved(Vehicle vehicle)
+        public static void VehicleWasRemoved(IVehicle vehicle)
         {
             Console.WriteLine("--------------------");
             Console.WriteLine($"{vehicle} \nSuccessfully Removed!");

@@ -6,7 +6,7 @@ using System.Threading.Tasks.Dataflow;
 
 namespace Garage_JoakimMalmstrom
 {
-    internal class GarageHandler : Garage<Vehicle>
+    internal class GarageHandler : Garage<IVehicle>
     {
         public GarageHandler(int capacity) : base(capacity)
         {
@@ -15,8 +15,12 @@ namespace Garage_JoakimMalmstrom
         public void GetRandomVehicles()
         {
             string regNumber = "ABC123";
-            var boat = new Boat(regNumber, "Red", 2, 35);
-            Add(regNumber, boat);
+            string color = "Red";
+            int numWheels = 4;
+            string model = "Batmobile";
+
+            IVehicle car = new Car(regNumber, color, numWheels, model);
+            Add(regNumber, car);
         }
 
         public void GetParkedVehicles()
@@ -138,6 +142,8 @@ namespace Garage_JoakimMalmstrom
             switch (vehicleType)
             {
                 case VehicleType.Car:
+                    SpecificVehicleSearch(vehicleType);
+                    break;
                     // all cars
                     // cars with color
                     // cars with wheels

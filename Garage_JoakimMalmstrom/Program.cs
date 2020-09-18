@@ -7,6 +7,14 @@ namespace Garage_JoakimMalmstrom
     {
         static void Main(string[] args)
         {
+            //IVehicle vehicle = new Bus("321", "321", 123, 5);
+
+            //if (vehicle is IBus bus)
+            //{
+            //    bus.NumSeats = 3;
+            //    Console.WriteLine(bus);
+            //}
+
             int capacity;
             SetGarageCapacity(out capacity);
             var garageHandler = new GarageHandler(capacity);
@@ -16,21 +24,18 @@ namespace Garage_JoakimMalmstrom
         }
         private static void SetGarageCapacity(out int capacity)
         {
-            bool isInvalidNumber = true;
+            bool isCapacitySet = false;
             do
             {
                 Console.Write("Enter the park capacity of the garage: ");
+
                 bool success = int.TryParse(Console.ReadLine(), out capacity);
-                switch (success)
-                {
-                    case true:
-                        isInvalidNumber = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid number!");
-                        break;
-                }
-            } while (isInvalidNumber);
+                if (success)
+                    isCapacitySet = true;
+                else
+                    Console.WriteLine("Invalid format"!);
+
+            } while (!isCapacitySet);
         }
         private static void SetStartVehicles(GarageHandler garageHandler)
         {
@@ -39,23 +44,16 @@ namespace Garage_JoakimMalmstrom
             {
                 Console.Write("Would you like to populate the garage from the start? ");
                 string input = Console.ReadLine();
-
-                switch (input)
+                if (input == "Yes")
                 {
-                    case "Yes":
-                        // TO DO: Get random vehicles with random properties
-                        // TO DO: Another function than add here
-                        garageHandler.GetRandomVehicles();
-                        isMenuActive = false;
-                        break;
-
-                    case "No":
-                        isMenuActive = false;
-                        break;
-                    default:
-                        Console.WriteLine("Type 'Yes' or 'No'");
-                        break;
+                    garageHandler.GetRandomVehicles();
+                    isMenuActive = false;
                 }
+                else if (input == "No")
+                    isMenuActive = false;
+                else
+                    Console.WriteLine("Type Yes or No");
+
             } while (isMenuActive);
         }
 
@@ -64,7 +62,6 @@ namespace Garage_JoakimMalmstrom
             bool isMenuActive = true;
 
             Console.Clear();
-            garageHandler.CarCheck();
             do
             {
                 UI.MainMenuInfo(garageHandler);

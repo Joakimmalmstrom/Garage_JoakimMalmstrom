@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Garage_JoakimMalmstrom
 {
-    abstract public class Vehicle
+    abstract public class Vehicle : IVehicle
     {
         public string RegNum { get; set; }
         public string Color { get; set; }
