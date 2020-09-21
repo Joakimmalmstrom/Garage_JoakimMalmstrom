@@ -19,7 +19,6 @@ namespace Garage_JoakimMalmstrom
             SetGarageCapacity(out capacity);
             var garageHandler = new GarageHandler(capacity);
             SetStartVehicles(garageHandler);
-
             MainMenu(garageHandler);
         }
         private static void SetGarageCapacity(out int capacity)
@@ -107,23 +106,9 @@ namespace Garage_JoakimMalmstrom
                         if (garageHandler.IsGarageEmpty)
                             Console.WriteLine("Garage is empty!");
                         else
-                            UI.SearchVehiclePropertiesInfo();
-
-                        switch (Console.ReadLine())
                         {
-                            case "1":
-                                Console.Clear();
-                                garageHandler.SearchAllVehicles();
-                                break;
-
-                            case "2":
-                                Console.Clear();
-                                garageHandler.SearchSpecificVehicle(GetVehicleType());
-                                break;
-
-                            default:
-                                Console.WriteLine("Unknown input");
-                                break;
+                            UI.SearchVehiclePropertiesInfo();
+                            SearchVehicleSubMenu(garageHandler);
                         }
                         UI.EnterToClear();
                         break;
@@ -140,6 +125,27 @@ namespace Garage_JoakimMalmstrom
 
             } while (isMenuActive);
         }
+
+        private static void SearchVehicleSubMenu(GarageHandler garageHandler)
+        {
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    Console.Clear();
+                    garageHandler.SearchFilterAllVehicles();
+                    break;
+
+                case "2":
+                    Console.Clear();
+                    garageHandler.SearchSpecificVehicle(GetVehicleType());
+                    break;
+
+                default:
+                    Console.WriteLine("Unknown input");
+                    break;
+            }
+        }
+
         public static VehicleType GetVehicleType()
         {
             UI.AddVehicleToGarageInfo();

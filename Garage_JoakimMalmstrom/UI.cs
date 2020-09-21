@@ -70,9 +70,7 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine("1. Input for Color");
             Console.WriteLine("2. Input for Number of Wheels");
             Console.WriteLine("--------------------");
-            Console.WriteLine("3. Output Color & Number of Wheels");
-            Console.WriteLine("4. Output Color");
-            Console.WriteLine("5. Output Number of Wheels");
+            Console.WriteLine("3. Compile Results");
             Console.WriteLine("--------------------");
             if (color != "" || wheels <= 0)
             Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels}");
@@ -97,6 +95,18 @@ namespace Garage_JoakimMalmstrom
 
             Console.WriteLine("1. Look through all vehicles");
             Console.WriteLine("2. Look through specific vehicles");
+        }
+
+        internal static void CarSearchInfo(string color, int wheels, string model)
+        {
+            Console.WriteLine("1. Input for Color");
+            Console.WriteLine("2. Input for Number of Wheels");
+            Console.WriteLine("3. Input for Model");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("3. Compile Results");
+            Console.WriteLine("--------------------");
+            if (color != "" || wheels <= 0 || model != "")
+                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Model: {model}");
         }
     }
 }
