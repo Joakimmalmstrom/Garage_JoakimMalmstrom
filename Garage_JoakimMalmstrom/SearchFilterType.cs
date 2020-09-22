@@ -5,6 +5,7 @@
         All,
         Color,
         Wheels,
-        Model
+        Model,
+        Seats
     }
 }

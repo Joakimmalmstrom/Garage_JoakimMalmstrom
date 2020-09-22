@@ -76,6 +76,13 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels}");
         }
 
+        internal static void SearchCompleteInfo()
+        {
+            Console.Clear();
+            Console.WriteLine("Result");
+            Console.WriteLine("--------------------");
+        }
+
         public static void VehicleWasRemoved(IVehicle vehicle)
         {
             Console.WriteLine("--------------------");
@@ -103,10 +110,22 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine("2. Input for Number of Wheels");
             Console.WriteLine("3. Input for Model");
             Console.WriteLine("--------------------");
-            Console.WriteLine("3. Compile Results");
+            Console.WriteLine("4. Compile Results");
             Console.WriteLine("--------------------");
             if (color != "" || wheels <= 0 || model != "")
                 Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Model: {model}");
+        }
+
+        internal static void BusSearchInfo(string color, int wheels, int seats)
+        {
+            Console.WriteLine("1. Input for Color");
+            Console.WriteLine("2. Input for Number of Wheels");
+            Console.WriteLine("3. Input for Number of Seats");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("4. Compile Results");
+            Console.WriteLine("--------------------");
+            if (color != "" || wheels <= 0 || seats != 0)
+                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Model: {seats}");
         }
     }
 }

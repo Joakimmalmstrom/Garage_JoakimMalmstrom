@@ -14,7 +14,6 @@ namespace Garage_JoakimMalmstrom
         }
         public void GetRandomVehicles()
         {
-
             string regNumber = "ABC123";
             string color = "Red";
             int numWheels = 4;
@@ -183,16 +182,18 @@ namespace Garage_JoakimMalmstrom
         // Tried googling "C# search filter" but couldn't find any answer to my problem.
         public void SearchSpecificVehicle(VehicleType vehicleType)
         {
-            string input = Console.ReadLine();
             string color = "";
             int wheels = 0;
+            int seats = 0;
             string model = "";
 
-            bool compileSearch = false;
+            bool isSearching = true;
 
             bool colorFilter = false;
             bool wheelFilter = false;
+
             bool modelFilter = false;
+            bool seatsFilter = false;
 
             SearchFilterType search = new SearchFilterType();
 
@@ -203,43 +204,114 @@ namespace Garage_JoakimMalmstrom
                     {
                         UI.CarSearchInfo(color, wheels, model);
 
+                        string input = Console.ReadLine();
                         switch (input)
                         {
                             case "1":
                                 GetVehicleColor(out color, out colorFilter, out search);
+                                UI.EnterToClear();
                                 break;
                             case "2":
                                 wheels = GetVehicleWheels(ref wheelFilter, ref search);
+                                UI.EnterToClear();
                                 break;
                             case "3":
-                                Console.Clear();
-                                Console.WriteLine("Input a Model");
-                                model = Console.ReadLine();
-                                Console.WriteLine($"{model} model added to the search filter");
-
-                                modelFilter = true;
-                                search = SearchFilterType.Model;
+                                GetCarModel(out model, out modelFilter, out search);
+                                UI.EnterToClear();
                                 break;
                             case "4":
                                 Console.Clear();
-                                Console.WriteLine("Function not implemented");
-                                compileSearch = true;
-                                UI.EnterToClear();
+                                if (colorFilter && wheelFilter && modelFilter)
+                                    search = SearchFilterType.All;
+
+                                OutputCar(color, wheels, model, search);
+
+                                isSearching = false;
                                 break;
                             default:
                                 break;
                         }
-                    } while (!compileSearch);
+                    } while (isSearching);
+
                     break;
-                default:
+                case VehicleType.Bus:
+                    do
+                    {
+                        UI.BusSearchInfo(color, wheels, seats);
+
+                        string input = Console.ReadLine();
+                        switch (input)
+                        {
+                            case "1":
+                                GetVehicleColor(out color, out colorFilter, out search);
+                                UI.EnterToClear();
+                                break;
+                            case "2":
+                                wheels = GetVehicleWheels(ref wheelFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "3":
+                                seats = GetBusSeats(ref seatsFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "4":
+                                Console.Clear();
+                                if (colorFilter && wheelFilter && seatsFilter)
+                                    search = SearchFilterType.All;
+
+                                isSearching = false;
+                                break;
+                            default:
+                                break;
+                        }
+                    } while (isSearching);
+                    break;
+                case VehicleType.Boat:
+                    break;
+                case VehicleType.Airplane:
+                    break;
+                case VehicleType.Motorcycle:
                     break;
             }
         }
+
+        private int GetBusSeats(ref bool seatsFilter, ref SearchFilterType search)
+        {
+            Console.Clear();
+            int seats;
+
+            Console.WriteLine("Input number of seats");
+            bool success = int.TryParse(Console.ReadLine(), out seats);
+            if (success)
+            {
+                Console.WriteLine($"{seats} number of seats added to the search filter");
+                seatsFilter = true;
+                search = SearchFilterType.Seats;
+            }
+            else
+                Console.WriteLine("Wrong format!");
+
+            return seats;
+
+        }
+
+        private static void GetCarModel(out string model, out bool modelFilter, out SearchFilterType search)
+        {
+            Console.Clear();
+            Console.WriteLine("Input a Model");
+            model = Console.ReadLine();
+            Console.WriteLine($"{model} model added to the search filter");
+
+            modelFilter = true;
+            search = SearchFilterType.Model;
+        }
+
         public void SearchFilterAllVehicles()
         {
             string color = "";
             int wheels = 0;
             bool isSearching = true;
+
             bool colorFilter = false;
             bool wheelFilter = false;
 
@@ -255,16 +327,17 @@ namespace Garage_JoakimMalmstrom
                 {
                     case "1":
                         GetVehicleColor(out color, out colorFilter, out search);
+                        UI.EnterToClear();
                         break;
 
                     case "2":
                         wheels = GetVehicleWheels(ref wheelFilter, ref search);
+                        UI.EnterToClear();
                         break;
 
                     case "3":
                         if (colorFilter && wheelFilter)
                             search = SearchFilterType.All;
-                        Console.Clear();
 
                         OutputSearchFilter(color, wheels, search);
 
@@ -299,14 +372,12 @@ namespace Garage_JoakimMalmstrom
             if (success)
             {
                 Console.WriteLine($"{wheels} number of wheels added to the search filter");
-                UI.EnterToClear();
                 wheelFilter = true;
                 search = SearchFilterType.Wheels;
             }
             else
                 Console.WriteLine("Wrong format!");
 
-            UI.EnterToClear();
             return wheels;
         }
 

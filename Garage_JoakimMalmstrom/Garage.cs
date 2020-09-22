@@ -40,9 +40,6 @@ namespace Garage_JoakimMalmstrom
 
         public void Add(string regNumber, T vehicle)
         {
-            //if (vehicles.Length <= 0)
-            //    vehicles = new T[capacity];
-
             vehicles[count++] = vehicle;
             regNumRegister.Add(regNumber, vehicle);
         }
@@ -77,15 +74,17 @@ namespace Garage_JoakimMalmstrom
         {
             foreach (var item in regNumRegister)
             {
-                if (item.Key == input)
+                if (item.Key.Equals(input))
                     return $"Match Found: {item.Value}";
             }
             return $"Match NOT Found for: {input}";
         }
 
-       
+
         public void OutputSearchFilter(string color, int wheels, SearchFilterType search)
         {
+            UI.SearchCompleteInfo();
+
             foreach (var v in vehicles)
             {
                 if (v != null)
@@ -107,24 +106,77 @@ namespace Garage_JoakimMalmstrom
                         default:
                             break;
                     }
-
                 }
             }
+            Console.WriteLine("--------------------");
         }
 
-        public void OutputVehicles()
+        public void OutputCar(string color, int wheels, string model, SearchFilterType search)
         {
-            Console.Clear();
-            Console.WriteLine("Result");
-            Console.WriteLine("--------------------");
-
+            UI.SearchCompleteInfo();
             foreach (var v in vehicles)
             {
-                Console.WriteLine(v);
+                if (v != null && v is Car car)
+                {
+                    switch (search)
+                    {
+                        case SearchFilterType.All:
+                            if (car.Color.Equals(color) && car.NumWheels.Equals(wheels) && car.Model.Equals(model))
+                                Console.WriteLine(car);
+                            break;
+                        case SearchFilterType.Color:
+                            if (car.Color.Equals(color))
+                                Console.WriteLine(car);
+                            break;
+                        case SearchFilterType.Wheels:
+                            if (car.NumWheels.Equals(wheels))
+                                Console.WriteLine(car);
+                            break;
+                        case SearchFilterType.Model:
+                            if (car.Model.Equals(model))
+                                Console.WriteLine(car);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             Console.WriteLine("--------------------");
-            Console.WriteLine("Search Complete!");
         }
+
+        public void OutputBus(string color, int wheels, int seats, SearchFilterType search)
+        {
+            UI.SearchCompleteInfo();
+            foreach (var v in vehicles)
+            {
+                if (v != null && v is Bus bus)
+                {
+                    switch (search)
+                    {
+                        case SearchFilterType.All:
+                            if (bus.Color.Equals(color) && bus.NumWheels.Equals(wheels) && bus.NumSeats.Equals(seats))
+                                Console.WriteLine(bus);
+                            break;
+                        case SearchFilterType.Color:
+                            if (bus.Color.Equals(color))
+                                Console.WriteLine(bus);
+                            break;
+                        case SearchFilterType.Wheels:
+                            if (bus.NumWheels.Equals(wheels))
+                                Console.WriteLine(bus);
+                            break;
+                        case SearchFilterType.Seats:
+                            if (bus.NumSeats.Equals(seats))
+                                Console.WriteLine(bus);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            Console.WriteLine("--------------------");
+        }
+
 
 
         public IEnumerator<T> GetEnumerator()
