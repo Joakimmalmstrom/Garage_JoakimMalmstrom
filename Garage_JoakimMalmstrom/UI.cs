@@ -125,7 +125,43 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine("4. Compile Results");
             Console.WriteLine("--------------------");
             if (color != "" || wheels <= 0 || seats != 0)
-                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Model: {seats}");
+                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Number of Seats: {seats}");
+        }
+
+        internal static void BoatInfo(string color, int wheels, double length)
+        {
+            Console.WriteLine("1. Input for Color");
+            Console.WriteLine("2. Input for Number of Wheels");
+            Console.WriteLine("3. Input for Length");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("4. Compile Results");
+            Console.WriteLine("--------------------");
+            if (color != "" || wheels <= 0 || length != 0)
+                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Length: {length}");
+        }
+
+        internal static void AirplaneInfo(string color, int wheels, int engines)
+        {
+            Console.WriteLine("1. Input for Color");
+            Console.WriteLine("2. Input for Number of Wheels");
+            Console.WriteLine("3. Input for Number of Engines");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("4. Compile Results");
+            Console.WriteLine("--------------------");
+            if (color != "" || wheels <= 0 || engines != 0)
+                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Number of Engines: {engines}");
+        }
+
+        internal static void MotorcycleInfo(string color, int wheels, string type)
+        {
+            Console.WriteLine("1. Input for Color");
+            Console.WriteLine("2. Input for Number of Wheels");
+            Console.WriteLine("3. Input for Type");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("4. Compile Results");
+            Console.WriteLine("--------------------");
+            if (color != "" || wheels <= 0 || type != "")
+                Console.WriteLine($"Search Filter: Color: {color} || Number of Wheels: {wheels} || Type: {type}");
         }
     }
 }

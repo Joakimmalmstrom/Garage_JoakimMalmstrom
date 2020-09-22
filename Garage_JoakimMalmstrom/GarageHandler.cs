@@ -186,6 +186,9 @@ namespace Garage_JoakimMalmstrom
             int wheels = 0;
             int seats = 0;
             string model = "";
+            double length = 0;
+            int engines = 0;
+            string type = "";
 
             bool isSearching = true;
 
@@ -194,6 +197,9 @@ namespace Garage_JoakimMalmstrom
 
             bool modelFilter = false;
             bool seatsFilter = false;
+            bool lengthFilter = false;
+            bool engineFilter = false;
+            bool typeFilter = false;
 
             SearchFilterType search = new SearchFilterType();
 
@@ -229,6 +235,7 @@ namespace Garage_JoakimMalmstrom
                                 isSearching = false;
                                 break;
                             default:
+                                Console.WriteLine("Invalid input!");
                                 break;
                         }
                     } while (isSearching);
@@ -259,20 +266,157 @@ namespace Garage_JoakimMalmstrom
                                 if (colorFilter && wheelFilter && seatsFilter)
                                     search = SearchFilterType.All;
 
+                                OutputBus(color, wheels, seats, search);
                                 isSearching = false;
                                 break;
                             default:
+                                Console.WriteLine("Invalid input!");
                                 break;
                         }
                     } while (isSearching);
                     break;
                 case VehicleType.Boat:
+                    do
+                    {
+                        UI.BoatInfo(color, wheels, length);
+
+                        string input = Console.ReadLine();
+                        switch (input)
+                        {
+                            case "1":
+                                GetVehicleColor(out color, out colorFilter, out search);
+                                UI.EnterToClear();
+                                break;
+                            case "2":
+                                wheels = GetVehicleWheels(ref wheelFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "3":
+                                length = GetBoatLength(ref lengthFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "4":
+                                Console.Clear();
+                                if (colorFilter && wheelFilter && lengthFilter)
+                                    search = SearchFilterType.All;
+
+                                OutputBoat(color, wheels, length, search);
+                                isSearching = false;
+                                break;
+                            default:
+                                Console.WriteLine("Invalid input!");
+                                break;
+                        }
+                    } while (isSearching);
                     break;
                 case VehicleType.Airplane:
+                    do
+                    {
+                        UI.AirplaneInfo(color, wheels, engines);
+
+                        string input = Console.ReadLine();
+                        switch (input)
+                        {
+                            case "1":
+                                GetVehicleColor(out color, out colorFilter, out search);
+                                UI.EnterToClear();
+                                break;
+                            case "2":
+                                wheels = GetVehicleWheels(ref wheelFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "3":
+                                engines = GetAirplaneEngines(ref engineFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "4":
+                                Console.Clear();
+                                if (colorFilter && wheelFilter && engineFilter)
+                                    search = SearchFilterType.All;
+
+                                OutputAirplane(color, wheels, engines, search);
+                                isSearching = false;
+                                break;
+                            default:
+                                Console.WriteLine("Invalid input!");
+                                break;
+                        }
+                    } while (isSearching);
                     break;
                 case VehicleType.Motorcycle:
+                    do
+                    {
+                        UI.MotorcycleInfo(color, wheels, type);
+
+                        string input = Console.ReadLine();
+                        switch (input)
+                        {
+                            case "1":
+                                GetVehicleColor(out color, out colorFilter, out search);
+                                UI.EnterToClear();
+                                break;
+                            case "2":
+                                wheels = GetVehicleWheels(ref wheelFilter, ref search);
+                                UI.EnterToClear();
+                                break;
+                            case "3":
+                                GetMotorcycleType(out type, out typeFilter, out search);
+                                UI.EnterToClear();
+                                break;
+                            case "4":
+                                Console.Clear();
+                                if (colorFilter && wheelFilter && typeFilter)
+                                    search = SearchFilterType.All;
+
+                                OutputMotorcycle(color, wheels, type, search);
+                                isSearching = false;
+                                break;
+                            default:
+                                Console.WriteLine("Invalid input!");
+                                break;
+                        }
+                    } while (isSearching);
                     break;
             }
+        }
+
+        private int GetAirplaneEngines(ref bool engineFilter, ref SearchFilterType search)
+        {
+            Console.Clear();
+            int engines;
+
+            Console.WriteLine("Input the Number of Engines");
+            bool success = int.TryParse(Console.ReadLine(), out engines);
+            if (success)
+            {
+                Console.WriteLine($"{engines} engines added to the search filter");
+                engineFilter = true;
+                search = SearchFilterType.Engines;
+            }
+            else
+                Console.WriteLine("Wrong format!");
+
+            return engines;
+        }
+
+        private double GetBoatLength(ref bool lengthFilter, ref SearchFilterType search)
+        {
+            Console.Clear();
+            double length;
+
+            Console.WriteLine("Input the boat's length");
+            bool success = double.TryParse(Console.ReadLine(), out length);
+
+            if (success)
+            {
+                Console.WriteLine($"{length} length added to the search filter");
+                lengthFilter = true;
+                search = SearchFilterType.Length;
+            }
+            else
+                Console.WriteLine("Wrong format!");
+
+            return length;
         }
 
         private int GetBusSeats(ref bool seatsFilter, ref SearchFilterType search)
@@ -304,6 +448,17 @@ namespace Garage_JoakimMalmstrom
 
             modelFilter = true;
             search = SearchFilterType.Model;
+        }
+
+        private static void GetMotorcycleType(out string type, out bool typeFilter, out SearchFilterType search)
+        {
+            Console.Clear();
+            Console.WriteLine("Input a Model");
+            type = Console.ReadLine();
+            Console.WriteLine($"{type} model added to the search filter");
+
+            typeFilter = true;
+            search = SearchFilterType.Type;
         }
 
         public void SearchFilterAllVehicles()

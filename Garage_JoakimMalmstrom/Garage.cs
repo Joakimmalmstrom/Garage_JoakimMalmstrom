@@ -177,6 +177,106 @@ namespace Garage_JoakimMalmstrom
             Console.WriteLine("--------------------");
         }
 
+        public void OutputBoat(string color, int wheels, double length, SearchFilterType search)
+        {
+            UI.SearchCompleteInfo();
+            foreach (var v in vehicles)
+            {
+                if (v != null && v is Boat boat)
+                {
+                    switch (search)
+                    {
+                        case SearchFilterType.All:
+                            if (boat.Color.Equals(color) && boat.NumWheels.Equals(wheels) && boat.Length.Equals(length))
+                                Console.WriteLine(boat);
+                            break;
+                        case SearchFilterType.Color:
+                            if (boat.Color.Equals(color))
+                                Console.WriteLine(boat);
+                            break;
+                        case SearchFilterType.Wheels:
+                            if (boat.NumWheels.Equals(wheels))
+                                Console.WriteLine(boat);
+                            break;
+                        case SearchFilterType.Length:
+                            if (boat.Length.Equals(boat))
+                                Console.WriteLine(boat);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            Console.WriteLine("--------------------");
+        }
+
+        public void OutputAirplane(string color, int wheels, int engines, SearchFilterType search)
+        {
+            UI.SearchCompleteInfo();
+            foreach (var v in vehicles)
+            {
+                if (v != null && v is Airplane airplane)
+                {
+                    switch (search)
+                    {
+                        case SearchFilterType.All:
+                            if (airplane.Color.Equals(color) && airplane.NumWheels.Equals(wheels) && airplane.NumEngines.Equals(engines))
+                                Console.WriteLine(airplane);
+                            break;
+                        case SearchFilterType.Color:
+                            if (airplane.Color.Equals(color))
+                                Console.WriteLine(airplane);
+                            break;
+                        case SearchFilterType.Wheels:
+                            if (airplane.NumWheels.Equals(wheels))
+                                Console.WriteLine(airplane);
+                            break;
+                        case SearchFilterType.Engines:
+                            if (airplane.NumEngines.Equals(engines))
+                                Console.WriteLine(airplane);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            Console.WriteLine("--------------------");
+        }
+
+        public void OutputMotorcycle(string color, int wheels, string type, SearchFilterType search)
+        {
+            UI.SearchCompleteInfo();
+            foreach (var v in vehicles)
+            {
+                if (v != null && v is Motorcycle motorcycle)
+                {
+                    switch (search)
+                    {
+                        case SearchFilterType.All:
+                            if (motorcycle.Color.Equals(color) && motorcycle.NumWheels.Equals(wheels) && motorcycle.Type.Equals(type))
+                                Console.WriteLine(motorcycle);
+                            break;
+                        case SearchFilterType.Color:
+                            if (motorcycle.Color.Equals(color))
+                                Console.WriteLine(motorcycle);
+                            break;
+                        case SearchFilterType.Wheels:
+                            if (motorcycle.NumWheels.Equals(wheels))
+                                Console.WriteLine(motorcycle);
+                            break;
+                        case SearchFilterType.Type:
+                            if (motorcycle.Type.Equals(type))
+                                Console.WriteLine(motorcycle);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            Console.WriteLine("--------------------");
+        }
+
+
 
 
         public IEnumerator<T> GetEnumerator()

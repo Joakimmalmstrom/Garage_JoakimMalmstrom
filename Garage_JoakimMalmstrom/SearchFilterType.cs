@@ -6,6 +6,9 @@
         Color,
         Wheels,
         Model,
-        Seats
+        Seats,
+        Length,
+        Engines,
+        Type
     }
 }
